@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/WalletTransfer.Api/WalletTransfer.Api.csproj" />
+    <Project Path="src/WalletTransfer.Application/WalletTransfer.Application.csproj" />
+    <Project Path="src/WalletTransfer.Domain/WalletTransfer.Domain.csproj" />
+    <Project Path="src/WalletTransfer.Infrastructure/WalletTransfer.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/WalletTransfer.IntegrationTests/WalletTransfer.IntegrationTests.csproj" />
+    <Project Path="tests/WalletTransfer.UnitTests/WalletTransfer.UnitTests.csproj" />
+  </Folder>
+</Solution>
