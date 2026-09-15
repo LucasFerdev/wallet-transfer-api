@@ -25,6 +25,12 @@ public sealed class Wallet
 
     public void Debit(decimal amount)
     {
+        EnsureCanDebit(amount);
+        Balance -= amount;
+    }
+
+    public void EnsureCanDebit(decimal amount)
+    {
         ValidateAmount(amount);
 
         if (Balance < amount)
@@ -32,8 +38,6 @@ public sealed class Wallet
             throw new DomainException(
                 "O usuário não possui saldo suficiente.");
         }
-
-        Balance -= amount;
     }
 
     public void Credit(decimal amount)
