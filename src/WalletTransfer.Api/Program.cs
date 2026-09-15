@@ -1,9 +1,16 @@
+using WalletTransfer.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var connectionString =
+    builder.Configuration.GetConnectionString("Database")
+    ?? throw new InvalidOperationException(
+        "A string de conexão 'Database' não foi configurada.");
 
+builder.Services.AddInfrastructure(connectionString);
+
+// Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 var app = builder.Build();

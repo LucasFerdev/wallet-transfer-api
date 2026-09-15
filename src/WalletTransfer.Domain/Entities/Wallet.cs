@@ -7,6 +7,7 @@ public sealed class Wallet
     public long Id { get; private set; }
     public long UserId { get; private set; }
     public decimal Balance { get; private set; }
+    public uint Version { get; private set; }
 
     private Wallet()
     {
