@@ -7,7 +7,14 @@ var connectionString =
     ?? throw new InvalidOperationException(
         "A string de conexão 'Database' não foi configurada.");
 
-builder.Services.AddInfrastructure(connectionString);
+var externalServicesBaseUrl =
+    builder.Configuration["ExternalServices:BaseUrl"]
+    ?? throw new InvalidOperationException(
+        "A URL dos serviços externos não foi configurada.");
+
+builder.Services.AddInfrastructure(
+    connectionString,
+    externalServicesBaseUrl);
 
 // Add services to the container.
 builder.Services.AddControllers();

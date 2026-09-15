@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\WalletTransfer.Domain\WalletTransfer.Domain.csproj" />
     <ProjectReference Include="..\..\src\WalletTransfer.Application\WalletTransfer.Application.csproj" />
+    <ProjectReference Include="..\..\src\WalletTransfer.Infrastructure\WalletTransfer.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
