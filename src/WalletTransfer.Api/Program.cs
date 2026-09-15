@@ -1,3 +1,4 @@
+using WalletTransfer.Infrastructure.Persistence;
 using WalletTransfer.Api.Common.Exceptions;
 using System.Text.Json.Serialization;
 
@@ -35,6 +36,8 @@ builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
+
+await app.Services.InitializeDatabaseAsync();
 
 if (app.Environment.IsDevelopment())
 {

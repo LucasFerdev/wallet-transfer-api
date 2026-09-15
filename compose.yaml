@@ -1,0 +1,49 @@
+name: wallet-transfer
+
+services:
+  database:
+    image: postgres:17-alpine
+    container_name: wallet-transfer-database
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: wallet_transfer
+      POSTGRES_USER: wallet_user
+      POSTGRES_PASSWORD: wallet_password
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - wallet_transfer_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U wallet_user -d wallet_transfer
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wallet-transfer-api
+    restart: unless-stopped
+
+    depends_on:
+      database:
+        condition: service_healthy
+
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Database: Host=database;Port=5432;Database=wallet_transfer;Username=wallet_user;Password=wallet_password
+      ExternalServices__BaseUrl: https://util.devi.tools/
+
+    ports:
+      - "8080:8080"
+
+volumes:
+  wallet_transfer_data:
