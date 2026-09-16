@@ -25,22 +25,36 @@ services:
       timeout: 5s
       retries: 10
 
+  external-mock:
+    image: wiremock/wiremock:3.13.2
+    container_name: wallet-transfer-external-mock
+    restart: unless-stopped
+
+    volumes:
+      - ./docker/wiremock:/home/wiremock/mappings:ro
+
+    ports:
+      - "8081:8080"
+
   api:
     build:
       context: .
       dockerfile: Dockerfile
+
     container_name: wallet-transfer-api
     restart: unless-stopped
 
     depends_on:
       database:
         condition: service_healthy
+      external-mock:
+        condition: service_started
 
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8080
       ConnectionStrings__Database: Host=database;Port=5432;Database=wallet_transfer;Username=wallet_user;Password=wallet_password
-      ExternalServices__BaseUrl: https://util.devi.tools/
+      ExternalServices__BaseUrl: "${EXTERNAL_SERVICES_BASE_URL:-http://external-mock:8080/}"
 
     ports:
       - "8080:8080"
